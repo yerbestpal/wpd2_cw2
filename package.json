@@ -1,0 +1,19 @@
+{
+  "name": "wpd2_cw1",
+  "version": "1.0.0",
+  "description": "An activity planner web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Ross McLean",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
