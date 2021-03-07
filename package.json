@@ -11,7 +11,10 @@
   "author": "Ross McLean",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mustache-express": "^1.3.0",
+    "nedb": "^1.8.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
