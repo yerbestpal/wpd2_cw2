@@ -9,7 +9,7 @@ const path = require('path')
 const public = path.join(__dirname, 'public')
 app.use(express.static(public))
 
-const router = require('./routes/trackerRoutes')
+const router = require('./routes/plannerRoutes')
 app.use('/', router)
 
 const PORT = process.env.port || 3000
