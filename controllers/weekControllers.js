@@ -5,7 +5,7 @@ db.init()
 
 // This is a temporary function used for prototyping the week view
 exports.show_temp_view = (req, res) => {
-  db.getAllWeeksByUsersName('Ross', 'McLean').then(listOfAllWeeks => {
+  db.getAllWeeksByUser().then(listOfAllWeeks => {
     res.render('weeks/allWeeks', {
       'weeks': listOfAllWeeks
     })

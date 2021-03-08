@@ -3,7 +3,7 @@ const Nedb = require('nedb')
 
 class User {
   constructor (forename, surname) {
-    this.forname = forename
+    this.forename = forename
     this.surname = surname
   }
 }

@@ -3,6 +3,8 @@ const moment = require('moment')
 const userDAO = require('../models/userModel')
 const goalDAO = require('../models/goalModel')
 
+const testUser = new userDAO('Ross', 'McLean')
+
 class Week {
   constructor (number, user, goals, dbFilePath) {
     this.number = number
@@ -25,7 +27,7 @@ class Week {
     this.db.insert(
       {
         weekNumber: moment.utc().isoWeek(),
-        user: new userDAO('Ross', 'McLean'),
+        user: testUser,
         goals: [
           new goalDAO('Run 10K', false),
           new goalDAO('50 press-ups', false),
@@ -37,9 +39,9 @@ class Week {
     console.log('Week entry for Ross McLean inserted.')
   }
 
-  getAllWeeksByUsersName (forename, surname) {
+  getAllWeeksByUser () {
     return new Promise((resolve, reject) => {
-      this.db.find({ forename: forename, surname: surname }, (err, entries) => {
+      this.db.find({ user: testUser }, (err, entries) => {
         if (err) {
           reject(err)
         } else {
