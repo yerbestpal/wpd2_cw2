@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>head}}
+</head>
+<body>
+{{>navbar}}
+<div class="container">
+    <h1>{{weekNumber}}</h1>
+    <h2>{{userForename}}</h2>
+    <h2>{{userSurname}}</h2>
+    {{#entries}}
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text fw-bold">{{content}}</p>
+            </div>
+        </div>
+        <hr>
+    {{/entries}}
+    {{^entries}}
+        <p>No goals (yet).</p>
+    {{/entries}}
+</div>
+<script
+        crossorigin="anonymous"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+></script>
+</body>
+</html>

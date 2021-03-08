@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{>header}}
+    {{>head}}
 </head>
 <body>
 {{>navbar}}
@@ -9,17 +9,21 @@
     <h1>{{weekNumber}}</h1>
     <h2>{{userForename}}</h2>
     <h2>{{userSurname}}</h2>
-    {{#entries}}
-        <div class="card">
-            <div class="card-body">
-                <p class="card-text fw-bold">{{content}}</p>
-            </div>
-        </div>
+    {{#weeks}}
+{{!--        <div class="card">--}}
+{{!--            <div class="card-body">--}}
+{{!--                <p class="card-text fw-bold">{{content}}</p>--}}
+{{!--            </div>--}}
+{{!--        </div>--}}
+
+        <h1>{{weekNumber}}</h1>
+        <h2>{{userForename}}</h2>
+        <h2>{{userSurname}}</h2>
         <hr>
-    {{/entries}}
-    {{^entries}}
-        <p>No goals (yet).</p>
-    {{/entries}}
+    {{/weeks}}
+    {{^weeks}}
+        <p>No weeks (yet).</p>
+    {{/weeks}}
 </div>
 <script
         crossorigin="anonymous"

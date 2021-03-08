@@ -5,7 +5,14 @@ db.init()
 
 // This is a temporary function used for prototyping the week view
 exports.show_temp_view = (req, res) => {
-  res.send('<h1>Hello World</h1>')
+  db.getAllWeeksByUsersName('Ross', 'McLean').then(listOfAllWeeks => {
+    res.render('allWeeks', {
+      'weeks': listOfAllWeeks
+    })
+    console.log('Promise resolved')
+  }).catch(err => {
+    console.log('promise rejected', err)
+  })
 }
 
 exports.go_to_next_week = (req, res) => {
