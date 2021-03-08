@@ -16,6 +16,7 @@ class Week {
     } else {
       // In-memory mode (restarts every time - useful during development)
       this.db = new Nedb()
+      console.log('Successfully connected to DB in in-memory mode')
     }
   }
 
@@ -23,7 +24,7 @@ class Week {
   init () {
     this.db.insert(
       {
-        number: moment.utc().isoWeek(),
+        weekNumber: moment.utc().isoWeek(),
         user: new userDAO('Ross', 'McLean'),
         goals: [
           new goalDAO('Run 10K', false),
@@ -33,6 +34,7 @@ class Week {
         ]
       }
     )
+    console.log('Week entry for Ross McLean inserted.')
   }
 }
 

@@ -1,6 +1,6 @@
 class Goal {
-  constructor (text, isComplete) {
-    this.text = text
+  constructor (content, isComplete) {
+    this.content = content
     this.isComplete = isComplete
   }
 }
