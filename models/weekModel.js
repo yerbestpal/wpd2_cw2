@@ -1,6 +1,9 @@
 const Nedb = require('nedb')
 
-class Planner {
+const moment = require('moment')
+moment.locale('en')
+
+class Week {
   constructor (dbFilePath) {
     if (dbFilePath) {
       // Embedded mode
@@ -11,6 +14,9 @@ class Planner {
       this.db = new Nedb()
     }
   }
+}
 
-
+const weekSchema = {
+  weekNumber: moment.utc().isoWeek(),
+  goals: []
 }
