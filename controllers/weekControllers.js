@@ -3,6 +3,11 @@ const db = new weekDAO()
 
 db.init()
 
+// This is a temporary function used for prototyping the week view
+exports.show_temp_view = (req, res) => {
+  res.send('<h1>Hello World</h1>')
+}
+
 exports.go_to_next_week = (req, res) => {
   // if (next week doesn't exist) create new week
   //    add 7 days to moment and set new week/date
