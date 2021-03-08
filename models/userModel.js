@@ -1,11 +1,11 @@
 const moment = require('moment')
+const Nedb = require('nedb')
 
 class User {
   constructor (forename, surname) {
-    this.forename = forename
+    this.forname = forename
     this.surname = surname
-    this.pastWeeks = moment.utc().isoWeeks()
-    this.weeks = []
-    this.achievements = []
   }
 }
+
+module.exports = User
