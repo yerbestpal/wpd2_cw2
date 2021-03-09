@@ -7,18 +7,14 @@
 {{>partials/navbar}}
 <div class="container">
     {{#weeks}}
-        <div class="card">
+        <h1>Week {{weekNumber}}</h1>
+        <div class="card mx-5">
             <div class="card-body">
-                {{!--                {{#user}}--}}
-                {{!--                    <h2>{{forename}} {{surname}}</h2>--}}
-                {{!--                {{/user}}--}}
-                <p class="card-text fw-bold">Week {{weekNumber}}</p>
                 {{#goals}}
-                    <p class="card-text fw-bold">{{content}}</p>
+                    {{>goals/goal}}
                 {{/goals}}
             </div>
         </div>
-        <hr>
     {{/weeks}}
     {{^weeks}}
         <p>No week found matching the current week.</p>
