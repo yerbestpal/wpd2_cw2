@@ -1,15 +1,20 @@
 const Nedb = require('nedb')
-const moment = require('moment')
+const Moment = require('moment')
 const userDAO = require('../models/userModel')
 const goalDAO = require('../models/goalModel')
 
+const today = new Moment()
+const monday = today.startOf('isoWeek').format('ddd D MMM').toString()
+const sunday = today.endOf('isoWeek').format('ddd D MMM').toString()
+
 // TODO: Replace testUser with logged in user
 const testUser = new userDAO('Ross', 'McLean')
-const testWeek = new moment().isoWeek()
 
 class Week {
-  constructor (number, user, goals, dbFilePath) {
-    this.number = number
+  constructor (user, goals, dbFilePath) {
+    this.weekNumber = today.isoWeek()
+    this.fromDate = monday
+    this.toDate = sunday
     this.user = user
     this.goals = goals
 
@@ -28,7 +33,9 @@ class Week {
   init () {
     this.db.insert(
       {
-        weekNumber: moment.utc().isoWeek(),
+        weekNumber: today.utc().isoWeek(),
+        fromDate: monday,
+        toDate: sunday,
         user: testUser,
         goals: [
           new goalDAO('Run 10K', false),
@@ -54,14 +61,14 @@ class Week {
     })
   }
 
-  getCurrentWeek (user = testUser) {
+  getCurrentWeek (user = testUser, currentWeek = today.utc().isoWeek()) {
     return new Promise((resolve, reject) => {
-      this.db.find({ weekNumber: testWeek, user: user }, (err, entries) => {
+      this.db.find({ weekNumber: currentWeek }, (err, entries) => {
         if (err) {
           reject(err)
         } else {
           resolve(entries)
-          entries.forEach(obj => console.log(obj))
+          console.log(entries)
         }
       })
     })
