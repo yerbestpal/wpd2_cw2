@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{>head}}
+    {{>partials/head}}
 </head>
 <body>
-{{>navbar}}
+{{>partials/navbar}}
 <div class="container">
-    <h1>{{weekNumber}}</h1>
-    <h2>{{userForename}}</h2>
-    <h2>{{userSurname}}</h2>
-    {{#entries}}
+    {{#weeks}}
         <div class="card">
             <div class="card-body">
-                <p class="card-text fw-bold">{{content}}</p>
+                {{!--                {{#user}}--}}
+                {{!--                    <h2>{{forename}} {{surname}}</h2>--}}
+                {{!--                {{/user}}--}}
+                <p class="card-text fw-bold">Week {{weekNumber}}</p>
+                {{#goals}}
+                    <p class="card-text fw-bold">{{content}}</p>
+                {{/goals}}
             </div>
         </div>
         <hr>
-    {{/entries}}
-    {{^entries}}
-        <p>No goals (yet).</p>
-    {{/entries}}
+    {{/weeks}}
+    {{^weeks}}
+        <p>No week found matching the current week.</p>
+    {{/weeks}}
 </div>
 <script
         crossorigin="anonymous"

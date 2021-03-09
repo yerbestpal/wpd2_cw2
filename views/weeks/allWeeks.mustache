@@ -6,17 +6,13 @@
 <body>
 {{>partials/navbar}}
 <div class="container">
-    <h1>{{weekNumber}}</h1>
-    <h2>{{userForename}}</h2>
-    <h2>{{userSurname}}</h2>
     {{#weeks}}
         <div class="card">
             <div class="card-body">
-                <p class="card-text fw-bold">{{weekNumber}}</p>
-                {{#user}}
-                    <p class="card-text fw-bold">{{forename}}</p>
-                    <p class="card-text fw-bold">{{surname}}</p>
-                {{/user}}
+{{!--                {{#user}}--}}
+{{!--                    <h2>{{forename}} {{surname}}</h2>--}}
+{{!--                {{/user}}--}}
+                <p class="card-text fw-bold">Week {{weekNumber}}</p>
                 {{#goals}}
                     <p class="card-text fw-bold">{{content}}</p>
                 {{/goals}}

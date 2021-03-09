@@ -35,4 +35,13 @@ exports.go_to_previous_week = (req, res) => {
 exports.go_to_current_week = (req, res) => {
   // if (week number is not equal to the current week number) go to current week
   // else do nothing
+
+  db.getCurrentWeek().then(currentWeek => {
+    res.render('weeks/week', {
+      'weeks': currentWeek
+    })
+    console.log('Promise resolved: found week matching current week')
+  }).catch(err => {
+    console.log('promise rejected', err)
+  })
 }

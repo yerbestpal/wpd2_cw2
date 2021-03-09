@@ -3,7 +3,9 @@ const moment = require('moment')
 const userDAO = require('../models/userModel')
 const goalDAO = require('../models/goalModel')
 
+// TODO: Replace testUser with logged in user
 const testUser = new userDAO('Ross', 'McLean')
+const testWeek = new moment().isoWeek()
 
 class Week {
   constructor (number, user, goals, dbFilePath) {
@@ -39,9 +41,22 @@ class Week {
     console.log('Week entry for Ross McLean inserted.')
   }
 
-  getAllWeeksByUser () {
+  getAllWeeksByUser (user = testUser) {
     return new Promise((resolve, reject) => {
-      this.db.find({ user: testUser }, (err, entries) => {
+      this.db.find({ user: user }, (err, entries) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(entries)
+          entries.forEach(obj => console.log(obj))
+        }
+      })
+    })
+  }
+
+  getCurrentWeek (user = testUser) {
+    return new Promise((resolve, reject) => {
+      this.db.find({ weekNumber: testWeek, user: user }, (err, entries) => {
         if (err) {
           reject(err)
         } else {
