@@ -27,7 +27,10 @@ exports.get_all_user_posts = (req, res) => {
   const user = req.params.user
   db.getGoalsByUser(user).then(listOfAllGoals => {
     res.render('goals/entries', {
-      'goals': listOfAllGoals
+      'goals': listOfAllGoals,
+      'weekNumber': today.isoWeek(),
+      'fromDate': monday,
+      'toDate': sunday
     })
     console.log('Promise resolved')
   }).catch(err => {
