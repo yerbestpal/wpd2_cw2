@@ -1,13 +1,21 @@
 const goalDAO = require('../models/goalModel')
 const db = new goalDAO()
 
+const Moment = require('moment')
+const today = new Moment()
+const monday = today.startOf('isoWeek').format('ddd D MMM').toString()
+const sunday = today.endOf('isoWeek').format('ddd D MMM').toString()
+
 // Seed DB
-// db.init()
+db.init()
 
 exports.get_all_posts = (req, res) => {
   db.getAllGoals().then(listOfAllGoals => {
     res.render('goals/entries', {
-      'goals': listOfAllGoals
+      'goals': listOfAllGoals,
+      'weekNumber': today.isoWeek(),
+      'fromDate': monday,
+      'toDate': sunday
     })
     console.log('Promise resolved')
   }).catch(err => {

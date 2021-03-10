@@ -1,7 +1,8 @@
 const Nedb = require('nedb')
 const userDAO = require('../models/userModel')
 
-const testUser = new userDAO('Bob', 'Cobb')
+const bobCobb = new userDAO('Bob', 'Cobb')
+const pizzaPam = new userDAO('Pizza', 'Pam')
 
 class Goal {
   constructor (dbFilePath) {
@@ -20,28 +21,28 @@ class Goal {
   init () {
     this.db.insert(
       {
-        user: testUser,
+        user: bobCobb,
         content: 'Run 10K',
         isComplete: false
       }
     )
     this.db.insert(
       {
-        user: testUser,
+        user: bobCobb,
         content: '2 hours of yoga',
         isComplete: false
       }
     )
     this.db.insert(
       {
-        user: testUser,
+        user: pizzaPam,
         content: 'Eat less than 2500 kcal',
         isComplete: false
       }
     )
     this.db.insert(
       {
-        user: testUser,
+        user: pizzaPam,
         content: '50 press-ups',
         isComplete: false
       }
@@ -75,7 +76,7 @@ class Goal {
     })
   }
 
-  getAllUsersGoals (user = testUser) {
+  getAllUsersGoals (user = bobCobb) {
     return new Promise((resolve, reject) => {
       this.db.find({ user: user }, (err, entries) => {
         if (err) {

@@ -3,10 +3,9 @@ const db = new weekDAO()
 
 db.init()
 
-// This is a temporary function used for prototyping the week view
-exports.show_temp_view = (req, res) => {
+exports.get_all_weeks = (req, res) => {
   db.getAllUsersWeeks().then(listOfAllWeeks => {
-    res.render('weeks/allWeeks', {
+    res.render('weeks/entries', {
       'weeks': listOfAllWeeks
     })
     console.log('Promise resolved')
