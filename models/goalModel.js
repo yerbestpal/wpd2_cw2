@@ -64,7 +64,7 @@ class Goal {
 
   getAllGoals () {
     return new Promise((resolve, reject) => {
-      this.db.find({}, (err, entries) => {
+      this.db.find({}).sort({ content: 1 }).exec((err, entries) => {
         if (err) {
           reject(err)
         } else {

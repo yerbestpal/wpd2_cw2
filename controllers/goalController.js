@@ -4,7 +4,7 @@ const db = new goalDAO()
 // Seed DB
 // db.init()
 
-exports.get_all_users_posts = (req, res) => {
+exports.get_all_posts = (req, res) => {
   db.getAllGoals().then(listOfAllGoals => {
     res.render('goals/entries', {
       'goals': listOfAllGoals
