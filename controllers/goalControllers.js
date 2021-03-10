@@ -1,6 +1,7 @@
-const weekDAO = require('../models/weekModel')
-const db = new weekDAO()
+const goalDAO = require('../models/goalModel')
+const db = new goalDAO()
 
+// Seed DB
 db.init()
 
 // This is a temporary function used for prototyping the week view

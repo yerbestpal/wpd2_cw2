@@ -1,7 +1,16 @@
+const Nedb = require('nedb')
+
+
 class Goal {
-  constructor (content, isComplete) {
-    this.content = content
-    this.isComplete = isComplete
+  constructor (dbFilePath) {
+
+  }
+
+  createGoal (content, isComplete) {
+    const goal = {
+      content: content,
+      isComplete: isComplete
+    }
   }
 }
 

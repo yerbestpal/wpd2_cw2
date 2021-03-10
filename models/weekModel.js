@@ -48,14 +48,14 @@ class Week {
     console.log('Week entry for Ross McLean inserted.')
   }
 
-  getAllWeeksByUser (user = testUser) {
+  getAllUsersWeeks (user = testUser) {
     return new Promise((resolve, reject) => {
       this.db.find({ user: user }, (err, entries) => {
         if (err) {
           reject(err)
         } else {
           resolve(entries)
-          entries.forEach(obj => console.log(obj))
+          console.log(entries)
         }
       })
     })
