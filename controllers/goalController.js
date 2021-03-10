@@ -38,16 +38,21 @@ exports.get_all_user_posts = (req, res) => {
   })
 }
 
-exports.show_new_entry = function (req, res) {
+exports.show_new_entry = (req, res) => {
   res.render('goals/new')
 }
 
-exports.post_new_entry = function (req, res) {
+exports.post_new_entry = (req, res) => {
   if (!req.body.content) {
     res.status(400).send('Goal must contain content');
     return;
   }
 
   db.createEntry(req.body.user, req.body.content, false);
+  res.redirect('/');
+}
+
+exports.remove_entry = (req, res) => {
+  db.removeEntry(req.params._id)
   res.redirect('/');
 }

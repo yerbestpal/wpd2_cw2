@@ -59,6 +59,12 @@ class Goal {
     })
   }
 
+  removeEntry (id) {
+    this.db.remove({ _id: id }, { multi: true }, function (err, numOfDocsRemoved) {
+      err ? console.log(`error deleting goal: ${id}`) : console.log(`${numOfDocsRemoved} Goal removed from db`)
+    })
+  }
+
   getAllGoals () {
     return new Promise((resolve, reject) => {
       this.db.find({}).sort({ content: 1 }).exec((err, entries) => {
