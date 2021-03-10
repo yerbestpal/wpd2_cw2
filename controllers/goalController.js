@@ -24,9 +24,7 @@ exports.get_all_posts = (req, res) => {
 }
 
 exports.show_new_entry = function (req, res) {
-  res.render('goals/new', {
-    'title': 'Hello World'
-  })
+  res.render('goals/new')
 }
 
 exports.post_new_entry = function (req, res) {
