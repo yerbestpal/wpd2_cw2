@@ -9,13 +9,14 @@ app.engine('mustache', mustache())
 app.set('view engine', 'mustache')
 
 const path = require('path')
-const public = path.join(__dirname, 'public')
-app.use(express.static(public))
+const publicDir = path.join(__dirname, 'public')
+app.use(express.static(publicDir))
 
-const weekRouter = require('./routes/weekRoutes')
+// const weekRouter = require('./routes/weekRoutes')
+// app.use('/weeks', weekRouter)
+
 const goalRouter = require('./routes/goalRoutes')
-app.use('/weeks', weekRouter)
-app.use('/goals', goalRouter)
+app.use('/', goalRouter)
 
 const PORT = process.env.port || 3000
 app.listen(PORT, () => {

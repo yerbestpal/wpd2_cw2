@@ -1,5 +1,5 @@
 const express = require('express')
-const controller = require('../controllers/weekControllers')
+const controller = require('../controllers/weekController')
 const router = express.Router()
 
 router.get('/', controller.go_to_current_week)
