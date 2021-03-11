@@ -10,7 +10,7 @@ router.get('/:user', controller.get_all_user_goals);
 
 // router.get('/:weekNumber', controller.get_all_goals_by_week_number);
 
-router.get('/test/:weekNumber', controller.get_all_goals_by_week_number);
+router.get('/previous/:weekNumber', controller.get_previous_weeks_goals);
 
 router.get('/next/:weekNumber', controller.get_next_weeks_goals);
 

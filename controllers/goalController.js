@@ -102,6 +102,25 @@ exports.get_next_weeks_goals = async (req, res) => {
   })
 }
 
+exports.get_previous_weeks_goals = async (req, res) => {
+  const today = new Moment()
+  const weekNumber = Number(req.params.weekNumber) - 1
+  today.isoWeek(weekNumber)
+  await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
+    res.render('goals/entries', {
+      'allGoals': listOfAllGoals,
+      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
+      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
+      'weekNumber': weekNumber,
+      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
+      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
+    })
+    console.log('Promise resolved')
+  }).catch(err => {
+    console.log(`Promise rejected: ${err}`)
+  })
+}
+
 exports.show_new_entry = (req, res) => {
   res.render('goals/new')
 }
