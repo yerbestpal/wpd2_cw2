@@ -11,4 +11,7 @@ router.post('/new', controller.post_new_entry)
 
 router.get('/remove/:_id', controller.remove_entry)
 
+router.get('/update/:_id', controller.show_update_entry)
+router.post('/update/:_id', controller.post_update_entry)
+
 module.exports = router

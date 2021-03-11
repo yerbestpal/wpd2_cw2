@@ -60,8 +60,14 @@ class Goal {
   }
 
   removeEntry (id) {
-    this.db.remove({ _id: id }, { multi: true }, function (err, numOfDocsRemoved) {
+    this.db.remove({ _id: id }, { multi: false }, (err, numOfDocsRemoved) => {
       err ? console.log(`error deleting goal: ${id}`) : console.log(`${numOfDocsRemoved} Goal removed from db`)
+    })
+  }
+
+  updateEntry (id, user, content) {
+    this.db.update({ _id: id }, { $set: { user: user, content: content } }, (err, numUpdated) => {
+      err ? console.log(`error updating goal: ${id}`) : console.log(`${numUpdated} Goal updated in db`)
     })
   }
 
@@ -86,6 +92,19 @@ class Goal {
         } else {
           resolve(entries)
           console.log(entries)
+        }
+      })
+    })
+  }
+
+  getGoalById (id) {
+    return new Promise((resolve, reject) => {
+      this.db.findOne({ _id: id }, (err, entry) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(entry)
+          console.log(entry)
         }
       })
     })

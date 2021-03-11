@@ -53,6 +53,32 @@ exports.post_new_entry = (req, res) => {
 }
 
 exports.remove_entry = (req, res) => {
+  if (!req.params._id) {
+    res.status(400).send('No goal id provided');
+    return;
+  }
+
   db.removeEntry(req.params._id)
+  res.redirect('/');
+}
+
+// TODO: get goal data into placeholder text
+exports.show_update_entry = async (req, res) => {
+  const id = req.params._id
+  const goal = await db.getGoalById(id)
+  res.render('goals/update', {
+    'user': goal.user,
+    'content': goal.content
+  })
+  // res.render(`goals/update/${id}`)
+}
+
+exports.post_update_entry = (req, res) => {
+  if (!req.body.content) {
+    res.status(400).send('Goal must contain content');
+    return;
+  }
+
+  db.updateEntry(req.params._id, req.body.user, req.body.content);
   res.redirect('/');
 }
