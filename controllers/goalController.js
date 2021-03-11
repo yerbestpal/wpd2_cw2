@@ -9,7 +9,7 @@ const sunday = today.endOf('isoWeek').format('ddd D MMM').toString()
 // Seed DB
 db.init()
 
-exports.get_all_posts = async (req, res) => {
+exports.get_all_goals = async (req, res) => {
   await db.getAllGoals().then(listOfAllGoals => {
     res.render('goals/entries', {
       'allGoals': listOfAllGoals,
@@ -25,7 +25,8 @@ exports.get_all_posts = async (req, res) => {
   })
 }
 
-exports.get_all_user_posts = async (req, res) => {
+exports.get_all_user_goals = async (req, res) => {
+  console.log('get_all_user_goals')
   const user = req.params.user
   await db.getGoalsByUser(user).then(listOfAllGoals => {
     res.render('goals/entries', {
@@ -35,6 +36,48 @@ exports.get_all_user_posts = async (req, res) => {
       'weekNumber': today.isoWeek(),
       'fromDate': monday,
       'toDate': sunday
+    })
+    console.log('Promise resolved')
+  }).catch(err => {
+    console.log(`Promise rejected: ${err}`)
+  })
+}
+
+exports.get_all_goals_for_current_week = async (req, res) => {
+  console.log('get_all_goals_for_current_week')
+  const today = new Moment()
+  const currentWeek = today.isoWeek()
+  await db.getGoalsByWeekNumber(currentWeek).then(listOfAllGoals => {
+    console.log(listOfAllGoals)
+    res.render('goals/entries', {
+      'allGoals': listOfAllGoals,
+      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
+      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
+      'weekNumber': currentWeek,
+      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
+      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
+    })
+    console.log('Promise resolved')
+  }).catch(err => {
+    console.log(`Promise rejected: ${err}`)
+  })
+}
+
+
+exports.get_all_goals_by_week_number = async (req, res) => {
+  console.log('get_all_goals_by_week_number')
+  const weekNumber = req.params.weekNumber
+  today.isoWeek(weekNumber)
+  console.log(today.isoWeek())
+  await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
+    console.log(listOfAllGoals)
+    res.render('goals/entries', {
+      'allGoals': listOfAllGoals,
+      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
+      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
+      'weekNumber': weekNumber,
+      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
+      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
     })
     console.log('Promise resolved')
   }).catch(err => {
@@ -52,7 +95,7 @@ exports.post_new_entry = async (req, res) => {
     return;
   }
 
-  await db.createEntry(req.body.user, req.body.content, false);
+  await db.createEntry(req.body.user, req.body.content, false, req.body.date);
   res.redirect('/');
 }
 

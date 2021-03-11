@@ -19,38 +19,43 @@ class Goal {
       {
         user: 'Bob Cobb',
         content: 'Run 10K',
-        isComplete: true
+        isComplete: true,
+        weekNumber: 10
       }
     )
     this.db.insert(
       {
         user: 'Bob Cobb',
         content: '2 hours of yoga',
-        isComplete: false
+        isComplete: false,
+        weekNumber: 11
       }
     )
     this.db.insert(
       {
         user: 'Pizza Pam',
         content: 'Eat less than 2500 kcal',
-        isComplete: false
+        isComplete: false,
+        weekNumber: 12
       }
     )
     this.db.insert(
       {
         user: 'Pizza Pam',
         content: '50 press-ups',
-        isComplete: true
+        isComplete: true,
+        weekNumber: 13
       }
     )
     console.log('Goal seed data inserted.')
   }
 
-  createEntry (user, content, isComplete) {
+  createEntry (user, content, isComplete, date) {
     const entry = {
       user: user,
       content: content,
-      isComplete: isComplete
+      isComplete: isComplete,
+      date: date
     }
     this.db.insert(entry, (err, doc) => {
       err ? console.log(`Error inserting document: ${content}`) : console.log(`Successfully inserted document: ${doc}`)
@@ -87,6 +92,15 @@ class Goal {
     return new Promise((resolve, reject) => {
       this.db.find({ user: user }, (err, entries) => {
         err ? reject(err) : resolve(entries)
+      })
+    })
+  }
+
+  getGoalsByWeekNumber (weekNumber) {
+    return new Promise((resolve, reject) => {
+      this.db.find({ weekNumber: weekNumber }, (err, entries) => {
+        err ? reject(err) : resolve(entries)
+        console.log(entries)
       })
     })
   }
