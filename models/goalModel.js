@@ -52,8 +52,6 @@ class Goal {
       content: content,
       isComplete: isComplete
     }
-    console.log(`New goal entry created: ${entry}`)
-
     this.db.insert(entry, (err, doc) => {
       err ? console.log(`Error inserting document: ${content}`) : console.log(`Successfully inserted document: ${doc}`)
     })
@@ -61,31 +59,26 @@ class Goal {
 
   removeEntry (id) {
     this.db.remove({ _id: id }, { multi: false }, (err, numOfDocsRemoved) => {
-      err ? console.log(`error deleting goal: ${id}`) : console.log(`${numOfDocsRemoved} Goal removed from db`)
+      err ? console.log(`Error deleting goal: ${id}`) : console.log(`${numOfDocsRemoved} Goal removed from db`)
     })
   }
 
   updateEntry (id, user, content) {
     this.db.update({ _id: id }, { $set: { user: user, content: content } }, (err, numUpdated) => {
-      err ? console.log(`error updating goal: ${id}`) : console.log(`${numUpdated} Goal updated in db`)
+      err ? console.log(`Error updating goal: ${id}`) : console.log(`${numUpdated} Goal updated in db`)
     })
   }
 
   updateEntryCompletionStatus (id, status) {
     this.db.update({ _id: id }, { $set: { isComplete: status } }, (err, numUpdated) => {
-      err ? console.log(`error updating goal status: ${id}`) : console.log(`${numUpdated} Goal status updated in db`)
+      err ? console.log(`Error updating goal status: ${id}`) : console.log(`${numUpdated} Goal status updated in db`)
     })
   }
 
   getAllGoals () {
     return new Promise((resolve, reject) => {
       this.db.find({}).sort({ content: 1 }).exec((err, entries) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(entries)
-          // console.log(entries)
-        }
+        err ? reject(err) : resolve(entries)
       })
     })
   }
@@ -93,12 +86,7 @@ class Goal {
   getGoalsByUser (user) {
     return new Promise((resolve, reject) => {
       this.db.find({ user: user }, (err, entries) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(entries)
-          console.log(entries)
-        }
+        err ? reject(err) : resolve(entries)
       })
     })
   }
@@ -106,12 +94,7 @@ class Goal {
   getGoalById (id) {
     return new Promise((resolve, reject) => {
       this.db.findOne({ _id: id }, (err, entry) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(entry)
-          console.log(entry)
-        }
+        err ? reject(err) : resolve(entry)
       })
     })
   }
