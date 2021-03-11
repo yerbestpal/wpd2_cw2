@@ -19,7 +19,7 @@ class Goal {
       {
         user: 'Bob Cobb',
         content: 'Run 10K',
-        isComplete: false
+        isComplete: true
       }
     )
     this.db.insert(
@@ -40,7 +40,7 @@ class Goal {
       {
         user: 'Pizza Pam',
         content: '50 press-ups',
-        isComplete: false
+        isComplete: true
       }
     )
     console.log('Goal seed data inserted.')
@@ -68,6 +68,12 @@ class Goal {
   updateEntry (id, user, content) {
     this.db.update({ _id: id }, { $set: { user: user, content: content } }, (err, numUpdated) => {
       err ? console.log(`error updating goal: ${id}`) : console.log(`${numUpdated} Goal updated in db`)
+    })
+  }
+
+  updateEntryCompletionStatus (id, status) {
+    this.db.update({ _id: id }, { $set: { isComplete: status } }, (err, numUpdated) => {
+      err ? console.log(`error updating goal status: ${id}`) : console.log(`${numUpdated} Goal status updated in db`)
     })
   }
 

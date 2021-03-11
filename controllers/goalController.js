@@ -9,13 +9,13 @@ const sunday = today.endOf('isoWeek').format('ddd D MMM').toString()
 // Seed DB
 db.init()
 
-exports.get_all_posts = (req, res) => {
-  db.getAllGoals().then(listOfAllGoals => {
+exports.get_all_posts = async (req, res) => {
+  await db.getAllGoals().then(listOfAllGoals => {
     res.render('goals/entries', {
       'goals': listOfAllGoals,
       'weekNumber': today.isoWeek(),
       'fromDate': monday,
-      'toDate': sunday
+      'toDate': sunday,
     })
     console.log('Promise resolved')
   }).catch(err => {
@@ -23,9 +23,9 @@ exports.get_all_posts = (req, res) => {
   })
 }
 
-exports.get_all_user_posts = (req, res) => {
+exports.get_all_user_posts = async (req, res) => {
   const user = req.params.user
-  db.getGoalsByUser(user).then(listOfAllGoals => {
+  await db.getGoalsByUser(user).then(listOfAllGoals => {
     res.render('goals/entries', {
       'goals': listOfAllGoals,
       'weekNumber': today.isoWeek(),
@@ -42,27 +42,39 @@ exports.show_new_entry = (req, res) => {
   res.render('goals/new')
 }
 
-exports.post_new_entry = (req, res) => {
+exports.post_new_entry = async (req, res) => {
   if (!req.body.content) {
     res.status(400).send('Goal must contain content');
     return;
   }
 
-  db.createEntry(req.body.user, req.body.content, false);
+  await db.createEntry(req.body.user, req.body.content, false);
   res.redirect('/');
 }
 
-exports.remove_entry = (req, res) => {
+exports.remove_entry = async (req, res) => {
   if (!req.params._id) {
     res.status(400).send('No goal id provided');
     return;
   }
 
-  db.removeEntry(req.params._id)
+  await db.removeEntry(req.params._id)
   res.redirect('/');
 }
 
-// TODO: get goal data into placeholder text
+exports.update_entry_status = async (req, res) => {
+  const id = req.params._id
+  if (!id) {
+    res.status(400).send('No goal id provided');
+    return;
+  }
+
+  const goal = await db.getGoalById(id)
+  const status =  goal.isComplete
+  await db.updateEntryCompletionStatus(id, !status)
+  res.redirect('/');
+}
+
 exports.show_update_entry = async (req, res) => {
   const id = req.params._id
   const goal = await db.getGoalById(id)
@@ -70,7 +82,6 @@ exports.show_update_entry = async (req, res) => {
     'user': goal.user,
     'content': goal.content
   })
-  // res.render(`goals/update/${id}`)
 }
 
 exports.post_update_entry = (req, res) => {
