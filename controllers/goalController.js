@@ -12,7 +12,9 @@ db.init()
 exports.get_all_posts = async (req, res) => {
   await db.getAllGoals().then(listOfAllGoals => {
     res.render('goals/entries', {
-      'goals': listOfAllGoals,
+      'allGoals': listOfAllGoals,
+      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
+      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
       'weekNumber': today.isoWeek(),
       'fromDate': monday,
       'toDate': sunday,
@@ -27,7 +29,9 @@ exports.get_all_user_posts = async (req, res) => {
   const user = req.params.user
   await db.getGoalsByUser(user).then(listOfAllGoals => {
     res.render('goals/entries', {
-      'goals': listOfAllGoals,
+      'allGoals': listOfAllGoals,
+      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
+      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
       'weekNumber': today.isoWeek(),
       'fromDate': monday,
       'toDate': sunday

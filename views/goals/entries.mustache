@@ -14,12 +14,15 @@
     </div>
     <div class="card mx-5">
         <div class="card-body p-3 d-grid gap-3">
-            {{#goals}}
+            <h4>Incomplete</h4>
+            {{#incompleteGoals}}
                 {{>goals/goal}}
-            {{/goals}}
-            {{^goals}}
-                <p>No goals (yet).</p>
-            {{/goals}}
+            {{/incompleteGoals}}
+            {{^incompleteGoals}}
+                <div class="d-flex justify-content-center">
+                    <p class="fw-bold text-center fs-2 text-muted">All caught up!</p>
+                </div>
+            {{/incompleteGoals}}
             <div class="d-flex justify-content-center">
                 <a href="/new">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -27,6 +30,10 @@
                     </svg>
                 </a>
             </div>
+            <h4>Complete</h4>
+            {{#completeGoals}}
+                {{>goals/goal}}
+            {{/completeGoals}}
         </div>
     </div>
 </div>

@@ -84,7 +84,7 @@ class Goal {
           reject(err)
         } else {
           resolve(entries)
-          console.log(entries)
+          // console.log(entries)
         }
       })
     })
