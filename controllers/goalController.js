@@ -6,6 +6,10 @@ const Moment = require('moment')
 // Seed DB
 db.init()
 
+exports.redirect_root_to_current = (req, res) => {
+  res.redirect('/current');
+}
+
 exports.get_all_goals = async (req, res) => {
   const today = new Moment()
   await db.getAllGoals().then(listOfAllGoals => {
@@ -42,7 +46,7 @@ exports.get_all_user_goals = async (req, res) => {
   })
 }
 
-exports.get_all_goals_for_current_week = async (req, res) => {
+exports.get_current_week_goals = async (req, res) => {
   const today = new Moment()
   const currentWeek = today.isoWeek()
   await db.getGoalsByWeekNumber(currentWeek).then(listOfAllGoals => {
@@ -62,10 +66,27 @@ exports.get_all_goals_for_current_week = async (req, res) => {
 
 exports.get_all_goals_by_week_number = async (req, res) => {
   const today = new Moment()
-  const weekNumber = Number(req.params.weekNumber)
+  const weekNumber = req.params.weekNumber
   today.isoWeek(weekNumber)
-  console.log(weekNumber)
-  console.log(today.isoWeek())
+  await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
+    res.render('goals/entries', {
+      'allGoals': listOfAllGoals,
+      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
+      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
+      'weekNumber': weekNumber,
+      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
+      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
+    })
+    console.log('Promise resolved')
+  }).catch(err => {
+    console.log(`Promise rejected: ${err}`)
+  })
+}
+
+exports.get_next_weeks_goals = async (req, res) => {
+  const today = new Moment()
+  const weekNumber = Number(req.params.weekNumber) + 1
+  today.isoWeek(weekNumber)
   await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
     res.render('goals/entries', {
       'allGoals': listOfAllGoals,

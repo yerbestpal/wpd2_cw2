@@ -98,7 +98,7 @@ class Goal {
 
   getGoalsByWeekNumber (weekNumber) {
     return new Promise((resolve, reject) => {
-      this.db.find({ weekNumber: weekNumber }, (err, entries) => {
+      this.db.find({ weekNumber: Number(weekNumber) }, (err, entries) => {
         err ? reject(err) : resolve(entries)
         console.log(entries)
       })

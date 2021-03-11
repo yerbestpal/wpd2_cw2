@@ -2,14 +2,17 @@ const express = require('express')
 const controller = require('../controllers/goalController')
 const router = express.Router()
 
-// router.get('/', controller.get_all_goals)
-router.get('/', controller.get_all_goals_for_current_week)
+router.get('/', controller.redirect_root_to_current)
+
+router.get('/current', controller.get_current_week_goals)
 
 router.get('/:user', controller.get_all_user_goals);
 
 // router.get('/:weekNumber', controller.get_all_goals_by_week_number);
 
 router.get('/test/:weekNumber', controller.get_all_goals_by_week_number);
+
+router.get('/next/:weekNumber', controller.get_next_weeks_goals);
 
 router.get('/new', controller.show_new_entry)
 router.post('/new', controller.post_new_entry)
