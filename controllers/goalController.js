@@ -88,44 +88,6 @@ exports.get_all_goals_by_week_number = async (req, res) => {
   })
 }
 
-exports.get_next_weeks_goals = async (req, res) => {
-  const today = new Moment()
-  const weekNumber = Number(req.params.weekNumber) + 1
-  today.isoWeek(weekNumber)
-  await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
-    res.render('goals/entries', {
-      'allGoals': listOfAllGoals,
-      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
-      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
-      'weekNumber': weekNumber,
-      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
-      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
-    })
-    console.log('Promise resolved')
-  }).catch(err => {
-    console.log(`Promise rejected: ${err}`)
-  })
-}
-
-exports.get_previous_weeks_goals = async (req, res) => {
-  const today = new Moment()
-  const weekNumber = Number(req.params.weekNumber) - 1
-  today.isoWeek(weekNumber)
-  await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
-    res.render('goals/entries', {
-      'allGoals': listOfAllGoals,
-      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
-      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
-      'weekNumber': weekNumber,
-      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
-      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
-    })
-    console.log('Promise resolved')
-  }).catch(err => {
-    console.log(`Promise rejected: ${err}`)
-  })
-}
-
 exports.show_new_entry = (req, res) => {
   res.render('goals/new')
 }
@@ -136,9 +98,9 @@ exports.post_new_entry = async (req, res) => {
     return;
   }
 
-  const weekNumber = Number(req.params.weekNumber)
-  await db.createEntry(req.body.user, req.body.content, false, req.body.date, weekNumber);
-  res.redirect('/:weekNumber');
+  const currentWeek = Number(req.params.currentWeek)
+  await db.createEntry(req.body.user, req.body.content, false, currentWeek);
+  res.redirect(`/${currentWeek}`);
 }
 
 exports.remove_entry = async (req, res) => {

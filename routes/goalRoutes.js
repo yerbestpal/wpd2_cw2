@@ -5,19 +5,15 @@ const router = express.Router()
 router.get('/', controller.redirect_root_to_current_week)
 
 router.get('/:currentWeek', controller.get_all_goals_by_week_number)
-router.get('/:previousWeek', controller.get_all_goals_by_week_number)
-router.get('/:nextWeek', controller.get_all_goals_by_week_number)
 
-// router.get('/current', controller.get_current_week_goals)
-//
-// router.get('/previous/:weekNumber', controller.get_previous_weeks_goals);
-//
-// router.get('/next/:weekNumber', controller.get_next_weeks_goals);
+router.get('/:previousWeek', controller.get_all_goals_by_week_number)
+
+router.get('/:nextWeek', controller.get_all_goals_by_week_number)
 
 router.get('/:user', controller.get_all_user_goals);
 
-router.get('/new', controller.show_new_entry)
-router.post('/new', controller.post_new_entry)
+router.get('/new/:currentWeek', controller.show_new_entry)
+router.post('/new/:currentWeek', controller.post_new_entry)
 
 router.get('/remove/:_id', controller.remove_entry)
 
