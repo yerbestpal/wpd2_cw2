@@ -102,10 +102,12 @@ exports.update_entry_status = async (req, res) => {
     return;
   }
 
+  const currentWeek = Number(req.params.currentWeek)
+  console.log('hello world')
   const goal = await db.getGoalById(id)
   const status =  goal.isComplete
   await db.updateEntryCompletionStatus(id, !status)
-  res.redirect('/');
+  res.redirect(`/${currentWeek}`);
 }
 
 exports.show_update_entry = async (req, res) => {

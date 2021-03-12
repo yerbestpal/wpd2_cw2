@@ -20,6 +20,6 @@ router.get('/remove/:_id', controller.remove_entry)
 router.get('/update/:_id/:currentWeek', controller.show_update_entry)
 router.post('/update/:_id/:currentWeek', controller.post_update_entry)
 
-router.get('/update-status/:_id', controller.update_entry_status)
+router.get('/update-status/:_id/:currentWeek', controller.update_entry_status)
 
 module.exports = router
