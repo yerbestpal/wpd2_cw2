@@ -6,8 +6,9 @@ const Moment = require('moment')
 // Seed DB
 db.init()
 
-exports.redirect_root_to_current = (req, res) => {
-  res.redirect('/current');
+exports.redirect_root_to_current_week = (req, res) => {
+  const currentWeek = Moment().isoWeek()
+  res.redirect(`/${currentWeek}`);
 }
 
 exports.get_all_goals = async (req, res) => {
@@ -66,14 +67,18 @@ exports.get_current_week_goals = async (req, res) => {
 
 exports.get_all_goals_by_week_number = async (req, res) => {
   const today = new Moment()
-  const weekNumber = req.params.weekNumber
-  today.isoWeek(weekNumber)
-  await db.getGoalsByWeekNumber(weekNumber).then(listOfAllGoals => {
+  const currentWeek = req.params.currentWeek
+  const previousWeek = Number(currentWeek) - 1
+  const nextWeek = Number(currentWeek) + 1
+  today.isoWeek(currentWeek)
+  await db.getGoalsByWeekNumber(currentWeek).then(listOfAllGoals => {
     res.render('goals/entries', {
       'allGoals': listOfAllGoals,
       'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
       'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
-      'weekNumber': weekNumber,
+      'currentWeek': Number(currentWeek),
+      'previousWeek': previousWeek,
+      'nextWeek': nextWeek,
       'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
       'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
     })
@@ -131,8 +136,9 @@ exports.post_new_entry = async (req, res) => {
     return;
   }
 
-  await db.createEntry(req.body.user, req.body.content, false, req.body.date);
-  res.redirect('/');
+  const weekNumber = Number(req.params.weekNumber)
+  await db.createEntry(req.body.user, req.body.content, false, req.body.date, weekNumber);
+  res.redirect('/:weekNumber');
 }
 
 exports.remove_entry = async (req, res) => {

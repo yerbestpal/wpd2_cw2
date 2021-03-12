@@ -50,12 +50,12 @@ class Goal {
     console.log('Goal seed data inserted.')
   }
 
-  createEntry (user, content, isComplete, date) {
+  createEntry (user, content, isComplete, weekNumber) {
     const entry = {
       user: user,
       content: content,
       isComplete: isComplete,
-      date: date
+      weekNumber: weekNumber
     }
     this.db.insert(entry, (err, doc) => {
       err ? console.log(`Error inserting document: ${content}`) : console.log(`Successfully inserted document: ${doc}`)
