@@ -47,24 +47,6 @@ exports.get_all_user_goals = async (req, res) => {
   })
 }
 
-exports.get_current_week_goals = async (req, res) => {
-  const today = new Moment()
-  const currentWeek = today.isoWeek()
-  await db.getGoalsByWeekNumber(currentWeek).then(listOfAllGoals => {
-    res.render('goals/entries', {
-      'allGoals': listOfAllGoals,
-      'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
-      'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
-      'weekNumber': currentWeek,
-      'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
-      'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
-    })
-    console.log('Promise resolved')
-  }).catch(err => {
-    console.log(`Promise rejected: ${err}`)
-  })
-}
-
 exports.get_all_goals_by_week_number = async (req, res) => {
   const today = new Moment()
   const currentWeek = req.params.currentWeek
@@ -141,6 +123,7 @@ exports.post_update_entry = (req, res) => {
     return;
   }
 
-  db.updateEntry(req.params._id, req.body.user, req.body.content);
-  res.redirect('/');
+  const currentWeek = Number(req.params.currentWeek)
+  db.updateEntry(req.params._id, req.body.user, req.body.content, currentWeek);
+  res.redirect(`/${currentWeek}`);
 }
