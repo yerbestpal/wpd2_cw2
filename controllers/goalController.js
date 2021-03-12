@@ -92,7 +92,8 @@ exports.remove_entry = async (req, res) => {
   }
 
   await db.removeEntry(req.params._id)
-  res.redirect('/');
+  const currentWeek = Number(req.params.currentWeek)
+  res.redirect(`/${currentWeek}`);
 }
 
 exports.update_entry_status = async (req, res) => {

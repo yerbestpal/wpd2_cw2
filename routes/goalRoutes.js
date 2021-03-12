@@ -15,7 +15,7 @@ router.get('/:user', controller.get_all_user_goals);
 router.get('/new/:currentWeek', controller.show_new_entry)
 router.post('/new/:currentWeek', controller.post_new_entry)
 
-router.get('/remove/:_id', controller.remove_entry)
+router.get('/remove/:_id/:currentWeek', controller.remove_entry)
 
 router.get('/update/:_id/:currentWeek', controller.show_update_entry)
 router.post('/update/:_id/:currentWeek', controller.post_update_entry)
