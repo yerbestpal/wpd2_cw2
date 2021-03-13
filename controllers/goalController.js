@@ -29,15 +29,18 @@ exports.get_all_goals = async (req, res) => {
   })
 }
 
-exports.get_all_user_goals = async (req, res) => {
+exports.get_all_user_goals_by_week_number = async (req, res) => {
+  console.log('hello world')
   const today = new Moment()
   const user = req.params.user
-  await db.getGoalsByUser(user).then(listOfAllGoals => {
+  const currentWeek = Number(req.params.currentWeek)
+  await db.getUsersGoalsByWeek(user, currentWeek).then(listOfAllGoals => {
     res.render('goals/entries', {
       'allGoals': listOfAllGoals,
       'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
       'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
       'weekNumber': today.isoWeek(),
+      'currentWeek': currentWeek,
       'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
       'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
     })
@@ -104,7 +107,6 @@ exports.update_entry_status = async (req, res) => {
   }
 
   const currentWeek = Number(req.params.currentWeek)
-  console.log('hello world')
   const goal = await db.getGoalById(id)
   const status =  goal.isComplete
   await db.updateEntryCompletionStatus(id, !status)
