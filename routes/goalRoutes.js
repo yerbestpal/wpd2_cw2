@@ -10,10 +10,10 @@ router.get('/:previousWeek', controller.get_all_goals_by_week_number)
 
 router.get('/:nextWeek', controller.get_all_goals_by_week_number)
 
-router.get('/:user/:currentWeek', controller.get_all_user_goals_by_week_number);
-
 router.get('/new/:currentWeek', controller.show_new_entry)
 router.post('/new/:currentWeek', controller.post_new_entry)
+
+router.get('/:user/:currentWeek', controller.get_all_user_goals_by_week_number);
 
 router.get('/remove/:_id/:currentWeek', controller.remove_entry)
 

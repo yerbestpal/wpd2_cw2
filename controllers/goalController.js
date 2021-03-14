@@ -30,7 +30,7 @@ exports.get_all_goals = async (req, res) => {
 }
 
 exports.get_all_user_goals_by_week_number = async (req, res) => {
-  console.log('hello world')
+  console.log('get_all_user_goals_by_week_number ()')
   const today = new Moment()
   const user = req.params.user
   const currentWeek = Number(req.params.currentWeek)
@@ -79,6 +79,7 @@ exports.get_all_goals_by_week_number = async (req, res) => {
 }
 
 exports.show_new_entry = (req, res) => {
+  console.log('show_new_entry ()')
   res.render('goals/new')
 }
 
