@@ -34,6 +34,8 @@ exports.get_all_user_goals_by_week_number = async (req, res) => {
   const today = new Moment()
   const user = req.params.user
   const currentWeek = Number(req.params.currentWeek)
+  const previousWeek = Number(currentWeek) - 1
+  const nextWeek = Number(currentWeek) + 1
   await db.getUsersGoalsByWeek(user, currentWeek).then(listOfAllGoals => {
     res.render('goals/userEntries', {
       'user': user,
@@ -42,6 +44,8 @@ exports.get_all_user_goals_by_week_number = async (req, res) => {
       'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
       'weekNumber': today.isoWeek(),
       'currentWeek': currentWeek,
+      'previousWeek': previousWeek,
+      'nextWeek': nextWeek,
       'fromDate': today.startOf('isoWeek').format('ddd D MMM').toString(),
       'toDate': today.endOf('isoWeek').format('ddd D MMM').toString()
     })
