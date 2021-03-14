@@ -35,7 +35,8 @@ exports.get_all_user_goals_by_week_number = async (req, res) => {
   const user = req.params.user
   const currentWeek = Number(req.params.currentWeek)
   await db.getUsersGoalsByWeek(user, currentWeek).then(listOfAllGoals => {
-    res.render('goals/entries', {
+    res.render('goals/userEntries', {
+      'user': user,
       'allGoals': listOfAllGoals,
       'incompleteGoals': listOfAllGoals.filter(goal => goal.isComplete === false),
       'completeGoals': listOfAllGoals.filter(goal => goal.isComplete === true),
