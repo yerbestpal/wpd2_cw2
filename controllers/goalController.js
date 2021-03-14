@@ -8,7 +8,7 @@ db.init()
 
 exports.redirect_root_to_current_week = (req, res) => {
   const currentWeek = Moment().isoWeek()
-  res.redirect(`/${currentWeek}`);
+  res.redirect(`/${currentWeek}`)
 }
 
 exports.get_all_goals = async (req, res) => {
@@ -30,7 +30,6 @@ exports.get_all_goals = async (req, res) => {
 }
 
 exports.get_all_user_goals_by_week_number = async (req, res) => {
-  console.log('get_all_user_goals_by_week_number ()')
   const today = new Moment()
   const user = req.params.user
   const currentWeek = Number(req.params.currentWeek)
@@ -79,44 +78,43 @@ exports.get_all_goals_by_week_number = async (req, res) => {
 }
 
 exports.show_new_entry = (req, res) => {
-  console.log('show_new_entry ()')
   res.render('goals/new')
 }
 
 exports.post_new_entry = async (req, res) => {
   if (!req.body.content) {
-    res.status(400).send('Goal must contain content');
-    return;
+    res.status(400).send('Goal must contain content')
+    return
   }
 
   const currentWeek = Number(req.params.currentWeek)
-  await db.createEntry(req.body.user, req.body.content, false, currentWeek);
-  res.redirect(`/${currentWeek}`);
+  await db.createEntry(req.body.user, req.body.content, false, currentWeek)
+  res.redirect(`/${currentWeek}`)
 }
 
 exports.remove_entry = async (req, res) => {
   if (!req.params._id) {
-    res.status(400).send('No goal id provided');
-    return;
+    res.status(400).send('No goal id provided')
+    return
   }
 
   await db.removeEntry(req.params._id)
   const currentWeek = Number(req.params.currentWeek)
-  res.redirect(`/${currentWeek}`);
+  res.redirect(`/${currentWeek}`)
 }
 
 exports.update_entry_status = async (req, res) => {
   const id = req.params._id
   if (!id) {
-    res.status(400).send('No goal id provided');
-    return;
+    res.status(400).send('No goal id provided')
+    return
   }
 
   const currentWeek = Number(req.params.currentWeek)
   const goal = await db.getGoalById(id)
-  const status =  goal.isComplete
+  const status = goal.isComplete
   await db.updateEntryCompletionStatus(id, !status)
-  res.redirect(`/${currentWeek}`);
+  res.redirect(`/${currentWeek}`)
 }
 
 exports.show_update_entry = async (req, res) => {
@@ -130,11 +128,11 @@ exports.show_update_entry = async (req, res) => {
 
 exports.post_update_entry = (req, res) => {
   if (!req.body.content) {
-    res.status(400).send('Goal must contain content');
-    return;
+    res.status(400).send('Goal must contain content')
+    return
   }
 
   const currentWeek = Number(req.params.currentWeek)
-  db.updateEntry(req.params._id, req.body.user, req.body.content, currentWeek);
-  res.redirect(`/${currentWeek}`);
+  db.updateEntry(req.params._id, req.body.user, req.body.content, currentWeek)
+  res.redirect(`/${currentWeek}`)
 }
