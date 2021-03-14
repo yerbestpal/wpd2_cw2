@@ -22,4 +22,16 @@ router.post('/update/:_id/:currentWeek', controller.post_update_entry)
 
 router.get('/update-status/:_id/:currentWeek', controller.update_entry_status)
 
+router.use((req, res) => {
+  res.status(404);
+  res.type('text/plain');
+  res.send('Error: 404 Not found');
+})
+
+router.use((err, req, res, next) => {
+  res.status(500);
+  res.type('text/plain');
+  res.send('Error 500 Internal Server Error');
+})
+
 module.exports = router
