@@ -17,7 +17,7 @@ app.use(express.static(publicDir))
 const goalRouter = require('./routes/goalRoutes')
 app.use('/', goalRouter)
 
-const PORT = process.env.port || 3000
+const PORT = process.env.PORT || 80
 app.listen(PORT, () => {
   console.log(`Node server started on port ${PORT} - Press ctrl^c to quit.`)
 })
