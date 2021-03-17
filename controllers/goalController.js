@@ -4,7 +4,7 @@ const db = new goalDAO()
 const Moment = require('moment')
 
 // Seed DB
-db.init()
+// db.init()
 
 exports.redirect_root_to_current_week = (req, res) => {
   const currentWeek = Moment().isoWeek()

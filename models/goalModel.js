@@ -1,7 +1,7 @@
 const Nedb = require('nedb')
 
 class Goal {
-  constructor (dbFilePath) {
+  constructor (dbFilePath = "./databases/goals.db") {
     if (dbFilePath) {
       // Embedded mode
       this.db = new Nedb({ filename: dbFilePath, autoload: true })
