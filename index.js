@@ -11,14 +11,11 @@ const path = require('path')
 const publicDir = path.join(__dirname, 'public')
 app.use(express.static(publicDir))
 
-// const weekRouter = require('./routes/weekRoutes')
-// app.use('/weeks', weekRouter)
+const userRouter = require('./routes/userRoutes')
+app.use('/', userRouter)
 
 const goalRouter = require('./routes/goalRoutes')
 app.use('/goals', goalRouter)
-
-const userRouter = require('./routes/userRoutes')
-app.use('/', userRouter)
 
 const PORT = process.env.PORT || 80
 app.listen(PORT, () => {
