@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>partials/head}}
+</head>
+<body class="d-flex flex-column min-vh-100">
+{{>partials/navbar}}
+<div class="container flex-fill">
+    <div class="d-flex justify-content-center">
+        <h1>WPD2 Exercise Planner</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        {{^user}}
+            <a id="login" href="/login" class="btn btn-primary">Login</a>
+            <a id="login" href="/register" class="btn btn-secondary"> Register</a>
+        {{/user}}
+    </div>
+</div>
+{{>partials/footer}}
+<script
+        crossorigin="anonymous"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+></script>
+</body>
+</html>
