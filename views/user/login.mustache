@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    {{>partials/head}}
+</head>
+<body class="d-flex flex-column min-vh-100">
+{{>partials/navbar}}
+<div class="d-flex justify-content-center">
+    <h1>Login</h1>
+</div>§
+<form method="post" role="/login">
+    <div class="form-group">
+        {{user-name-error}}
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username"
+               name="username" placeholder="Enter a Username" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control"
+               id="pass"
+               name="pass"
+               placeholder="Enter a Password"
+               minlength="8" required>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Login" class="btn btn-primary">
+    </div>
+</form>
+{{>partials/footer}}
+<script
+        crossorigin="anonymous"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+></script>
+</body>
+</html>
