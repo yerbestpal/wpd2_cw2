@@ -8,7 +8,7 @@ const Moment = require('moment')
 
 exports.redirect_root_to_current_week = (req, res) => {
   const currentWeek = Moment().isoWeek()
-  res.redirect(`/goals/${currentWeek}`)
+  res.redirect(`/${currentWeek}`)
 }
 
 exports.get_all_goals = async (req, res) => {
