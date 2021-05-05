@@ -4,31 +4,33 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 {{>partials/navbar}}
-<div class="d-flex justify-content-center">
-    <h1>Login</h1>
-</div>§
-<form method="post" role="/login">
-    <div class="form-group">
-        {{user-name-error}}
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username"
-               name="username" placeholder="Enter a Username" required>
+<div class="container flex-fill">
+    <div class="d-flex justify-content-center">
+        <h1>Login</h1>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control"
-               id="pass"
-               name="pass"
-               placeholder="Enter a Password"
-               minlength="8" required>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Login" class="btn btn-primary">
-    </div>
-</form>
-<a id="login" href="/register" class="btn btn-primary">
-    Login
-</a>
+    <form method="post" role="/login" class="d-grid gap-3">
+        <div class="form-group">
+            {{user-name-error}}
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username"
+                   name="username" placeholder="Enter a Username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control"
+                   id="pass"
+                   name="pass"
+                   placeholder="Enter a Password"
+                   minlength="8" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary">
+        </div>
+    </form>
+    <a id="login" href="/register" class="btn btn-secondary">
+        Register
+    </a>
+</div>
 {{>partials/footer}}
 <script
         crossorigin="anonymous"
