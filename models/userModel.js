@@ -33,14 +33,14 @@ class UserDAO {
 
   create(username, password) {
     const that = this;
-    bcrypt.hash(password, saltRounds).then(function(hash) {
-      var entry = {
+    bcrypt.hash(password, saltRounds).then((hash) => {
+      const entry = {
         user: username,
         password: hash,
       };
       console.log('user entry is: ', entry);
 
-      that.db.insert(entry, function (err) {
+      that.db.insert(entry, (err) => {
         if (err) {
           console.log("Can't insert user: ", username);
         }
@@ -48,16 +48,12 @@ class UserDAO {
     });
   }
 
-  lookup(user, cb) {
+  lookup(user, callback) {
     this.db.find({'user': user}, function (err, entries) {
       if (err) {
-        return cb(null, null);
-      } else {
-        if (entries.length == 0) {
-          return cb(null, null);
-        }
-        return cb(null, entries[0]);
+        return callback(null, null);
       }
+      return entries.length == 0 ? callback(null, null) : callback(null, entries[0])
     });
   }
 }
