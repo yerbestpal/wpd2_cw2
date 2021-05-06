@@ -17,6 +17,9 @@ app.use('/', userRouter)
 const goalRouter = require('./routes/goalRoutes')
 app.use('/goals', goalRouter)
 
+const auth = require('./auth/auth')
+auth.init()
+
 const PORT = process.env.PORT || 80
 app.listen(PORT, () => {
   console.log(`Node server started on port ${PORT} - Press ctrl^c to quit.`)
