@@ -3,7 +3,7 @@ const Strategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 const userModel = require('../models/userModel')
 
-exports.init = () => {
+exports.init = (app) => {
   passport.use(new Strategy(
     (username, password, callback) => {
       userModel.lookup(username, (error, user) => {
@@ -32,4 +32,11 @@ exports.init = () => {
       callback(null, user)
     })
   })
+
+  app.use(passport.initialize())
+  app.use(passport.session())
+}
+
+exports.authorize = (redirectPath) => {
+  return passport.authenticate('local', { failureRedirect: redirectPath })
 }

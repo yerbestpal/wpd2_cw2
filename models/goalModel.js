@@ -1,16 +1,8 @@
-const Nedb = require('nedb')
+const utils = require('../utils')
 
 class Goal {
-  constructor (dbFilePath = "./databases/goals.db") {
-    if (dbFilePath) {
-      // Embedded mode
-      this.db = new Nedb({ filename: dbFilePath, autoload: true })
-      console.log(`DB is connected to: ${dbFilePath}`)
-    } else {
-      // In-memory mode (restarts every time - useful during development)
-      this.db = new Nedb()
-      console.log('Successfully connected to DB in in-memory mode')
-    }
+  constructor (dbFilePath = './databases/goals.db') {
+    utils.connectToDb(dbFilePath, this)
   }
 
   // Seed DB

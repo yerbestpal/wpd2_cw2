@@ -1,16 +1,10 @@
-const Datastore = require('nedb')
 const bcrypt = require('bcrypt')
+const utils = require('../utils')
 const saltRounds = 10
 
 class UserDAO {
-  constructor (dbFilePath) {
-    if (dbFilePath) {
-      //embedded
-      this.db = new Datastore({ filename: dbFilePath, autoload: true })
-    } else {
-      //in memory
-      this.db = new Datastore()
-    }
+  constructor (dbFilePath = './databases/users.db') {
+    utils.connectToDb(dbFilePath, this)
   }
 
   // for the demo the password is the bcrypt of the user name
@@ -48,8 +42,8 @@ class UserDAO {
   }
 
   lookup (user, callback) {
-    this.db.find({ 'user': user }, function (err, entries) {
-      if (err) {
+    this.db.find({ 'user': user }, (error, entries) => {
+      if (error) {
         return callback(null, null)
       }
       return entries.length == 0 ? callback(null, null) : callback(null, entries[0])
@@ -58,5 +52,5 @@ class UserDAO {
 }
 
 const dao = new UserDAO()
-dao.init()
+// dao.init()
 module.exports = dao

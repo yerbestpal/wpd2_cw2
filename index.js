@@ -17,8 +17,18 @@ app.use('/', userRouter)
 const goalRouter = require('./routes/goalRoutes')
 app.use('/goals', goalRouter)
 
+const session = require('express-session')
+app.use(session({ secret: 'dont tell anyone', resave: false, saveUninitialized: false }))
+
+const passport = require('passport')
+app.use(passport.initialize())
+app.use(passport.session())
+
 const auth = require('./auth/auth')
-auth.init()
+auth.init(app)
+
+// const UserDAO = require('./models/userModel')
+// UserDAO.init()
 
 const PORT = process.env.PORT || 80
 app.listen(PORT, () => console.log(`Node server started on port ${PORT} - Press ctrl^c to quit.`))
